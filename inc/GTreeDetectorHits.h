@@ -79,6 +79,8 @@ public:
             Double_t	GetVetoEnergy(const Int_t index)	const	{return VetoEnergy[index];}
     const	Double_t*	GetVetoTime()           		const	{return VetoTime;}
             Double_t	GetVetoTime(const Int_t index)	const	{return VetoTime[index];}
+
+    virtual void    SetNewBranchAddress(const char* bname, void *var);
 };
 
 

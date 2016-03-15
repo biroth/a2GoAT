@@ -45,4 +45,7 @@ void    GTreeDetectorHits::SetBranches()
     outputTree = inputTree->CloneTree(0);
 }
 
-
+void    GTreeDetectorHits::SetNewBranchAddress(const char* bname, void* var)
+{
+    inputTree->SetBranchAddress(bname,var);
+}
