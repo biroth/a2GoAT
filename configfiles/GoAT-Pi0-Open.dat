@@ -31,7 +31,7 @@ Do-Particle-Reconstruction: 0
 #Cut-TAPS-PSA:           configfiles/cuts/TAPS_PSA.root Hadron
 
 Do-Meson-Reconstruction: 1
-Cut-IM-Width-Pi0: 100
+Cut-IM-Width-Pi0: 20
 Cut-IM-Width-Eta: 44
 Cut-IM-Width-Eta-Prime: 60
 
@@ -45,7 +45,7 @@ Cut-IM-Width-Eta-Prime: 60
 # Sort on number of raw particle tracks (total, CB, and TAPS)
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #		    Total 	CB	TAPS
-SortRaw-NTracks:    3-		0+	0+
+#SortRaw-NTracks:    3-		0+	0+
 
 
 # Sort on Trigger conditions (Crystal Ball Energy Sum)
@@ -55,12 +55,12 @@ SortRaw-NTracks:    3-		0+	0+
 
 # Sort on reconstructed particle properties
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Sort-NParticles: 	2-
+#Sort-NParticles: 	2-
 
 #		Type		Number	Theta-min 	Theta-max
 Sort-Particle:	neutralPions	1=	0		180
-#Sort-Particle:	etas		0=	0		180
-#Sort-Particle:	etaPrimes	0=	0		180
+Sort-Particle:	etas		0=	0		180
+Sort-Particle:	etaPrimes	0=	0		180
 #Sort-Particle:	charged		1=	0		180
 
 # Note: (I'll put this here while we don't have a manual)
