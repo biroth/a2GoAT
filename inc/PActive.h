@@ -44,6 +44,13 @@ private:
     Int_t APPT_ADC[16];
     Int_t APPT_TDC[16];
 
+    Double_t APPT_ADC_Ped[16];
+    Double_t APPT_ADC_Gain[16];
+    Double_t APPT_TDC_Off[16];
+    Double_t APPT_TDC_Gain[16];
+
+    Double_t APPT_Scale;
+
     Double_t APPT_Ener[15];
     Double_t APPT_Time[15];
     Double_t APPT_ESumH;
@@ -76,6 +83,8 @@ public:
     virtual ~PActive();
     virtual Bool_t  Init();
     Bool_t InitOpeningAngle();
+    Bool_t InitActiveChannel();
+    Bool_t InitActiveScale();
 
 };
 #endif

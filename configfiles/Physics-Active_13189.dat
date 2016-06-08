@@ -1,0 +1,59 @@
+#=======================================================================
+# Config file for a Sigma2z Analysis of GoAT-Trees
+#=======================================================================
+
+# Decode double hits in tagger?
+#Decode-Doubles: 1
+
+# Set prompt and random windows (standard library and GH1 library)
+Set-Prompt-Cut: 2 22
+Add-Random-Cut: -480 -10
+Add-Random-Cut: 35 600
+
+# Set target mass (for standard physics library)
+Target-Mass: 938.272
+
+# cut on the tagger channel (for standard physics library)
+Tagger-Channel-Cut: 242 309
+
+# where are the tagger scalers?
+#Tagger-Scalers: 400 751
+
+# where are the live time scalers?
+# first is clock, second is inhibited, third (optional) is tagger inhib
+Live-Time-Scalers: 191 190 176
+
+Display-Scalers: TaggerAccScal 2864 2895
+Display-Scalers: TaggerAccScal 2064 2095
+Display-Scalers: TaggerAccScal 2576 2607
+Display-Scalers: TaggerAccScal 2288 2319
+Display-Scalers: TaggerAccScal 2000 2031
+Display-Scalers: TaggerAccScal 2352 2383
+Display-Scalers: TaggerAccScal 2640 2671
+Display-Scalers: TaggerAccScal 2032 2063
+Display-Scalers: TaggerAccScal 2320 2351
+Display-Scalers: TaggerAccScal 2608 2639
+Display-Scalers: TaggerAccScal 2896 2927
+
+# Opening angle cut
+Opening-Angle-Cut: 10
+
+# Active channels
+Active-Channel:  0  669.8 0.00683 -20000 0.1
+Active-Channel:  1  602.7 0.00680 -20000 0.1
+Active-Channel:  2  601.8 0.00678 -20000 0.1
+Active-Channel:  3  568.7 0.00719 -20000 0.1
+Active-Channel:  4  604.3 0.00625 -20000 0.1
+Active-Channel:  5  537.3 0.00813 -20000 0.1
+Active-Channel:  6  620.3 0.00775 -20000 0.1
+Active-Channel:  7  593.5 0.00727 -20000 0.1
+Active-Channel:  8  597.5 0.00727 -20000 0.1
+Active-Channel:  9  562.8 0.00738 -20000 0.1
+Active-Channel: 10  553.0 0.00704 -20000 0.1
+Active-Channel: 11  576.2 0.00712 -20000 0.1
+Active-Channel: 12  564.0 0.00787 -20000 0.1
+Active-Channel: 13  587.8 0.00712 -20000 0.1
+Active-Channel: 14  576.3 0.00820 -20000 0.1
+Active-Channel: 15 1786.0 0.02273 -20000 0.1
+
+Active-Scale: 1.02
