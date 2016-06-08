@@ -78,6 +78,8 @@ Bool_t	PActive::Init()
 	if(!InitBackgroundCuts()) return kFALSE;
     if(!InitTargetMass()) return kFALSE;
     if(!InitOpeningAngle()) return kFALSE;
+    if(!InitActiveChannel()) return kFALSE;
+    if(!InitActiveScale()) return kFALSE;
 
     if(!PPhysics::Init()) return kFALSE;
 
@@ -253,22 +255,28 @@ Bool_t 	PActive::InitOpeningAngle()
 
 Bool_t 	PActive::InitActiveChannel()
 {
-    Int_t sc1;
-    Double_t sc2, sc3, sc4, sc5;
-    string config = ReadConfig("Active-Channel");
-    if(sscanf( config.c_str(), "%d%lf%lf%lf%lf\n", &sc1, &sc2, &sc3, &sc4, &sc5) == 5)
+    string config;
+    Int_t instance = 0;
+    do
     {
-        cout << "Setting active channel " << sc1 << ": ADC Ped = " << sc2 << ", ADC Gain = " << sc3 << ", TDC Off = " << sc4 << ", TDC Gain = " << sc5 << endl << endl;
-        APPT_ADC_Ped[sc1] = sc2;
-        APPT_ADC_Gain[sc1] = sc3;
-        APPT_TDC_Off[sc1] = sc4;
-        APPT_TDC_Gain[sc1] = sc5;
-    }
-    else if(strcmp(config.c_str(), "nokey") != 0)
-    {
-        cout << "Active channel not set correctly" << endl << endl;
-        return kFALSE;
-    }
+        Int_t sc1;
+        Double_t sc2, sc3, sc4, sc5;
+        config = ReadConfig("Active-Channel", instance);
+        if(sscanf( config.c_str(), "%d%lf%lf%lf%lf\n", &sc1, &sc2, &sc3, &sc4, &sc5) == 5)
+        {
+            cout << "Setting active channel " << sc1 << ": ADC Ped = " << sc2 << ", ADC Gain = " << sc3 << ", TDC Off = " << sc4 << ", TDC Gain = " << sc5 << endl << endl;
+            APPT_ADC_Ped[sc1] = sc2;
+            APPT_ADC_Gain[sc1] = sc3;
+            APPT_TDC_Off[sc1] = sc4;
+            APPT_TDC_Gain[sc1] = sc5;
+        }
+        else if(strcmp(config.c_str(), "nokey") != 0)
+        {
+            cout << "Active channel not set correctly" << endl << endl;
+            return kFALSE;
+        }
+        instance++;
+    } while (strcmp(config.c_str(), "nokey") != 0);
 
     return kTRUE;
 
