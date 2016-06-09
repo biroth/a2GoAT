@@ -12,37 +12,37 @@
 class	PActive  : public PPhysics
 {
 private:
-    TH1*	TaggerAllHits;
-    TH1*	TaggerSingles;
-    TH1*	TaggerDoubles;
-    TH1*	TaggerAccScal;
-    TH1*	VupromAccScal;
+    TH1*	 TaggerAllHits;
+    TH1*	 TaggerSingles;
+    TH1*	 TaggerDoubles;
+    TH1*	 TaggerAccScal;
+    TH1*	 VupromAccScal;
 
-    TH1*	NePi_Time;
-    TH1*	NePi_TCut;
-    GH3*	NePi_EkEHMa;
-    GH3*	NePi_EkESMa;
-    GH3*	NePi_TiEHMa;
-    GH3*	NePi_TiESMa;
+    TH1*	 hTime;
+    TH1*	 hTCut;
+    GH3*	 hEkEHMa;
+    GH3*	 hEkESMa;
+    GH3*	 hTiEHMa;
+    GH3*	 hTiESMa;
 
-    TH1*	NePi_Time_OA;
-    TH1*	NePi_TCut_OA;
-    GH3*	NePi_EkEHMa_OA;
-    GH3*	NePi_EkESMa_OA;
-    GH3*	NePi_TiEHMa_OA;
-    GH3*	NePi_TiESMa_OA;
+    TH1*	 hTime_OA;
+    TH1*	 hTCut_OA;
+    GH3*	 hEkEHMa_OA;
+    GH3*	 hEkESMa_OA;
+    GH3*	 hTiEHMa_OA;
+    GH3*	 hTiESMa_OA;
 
-    GH3*	NePi_EkOAMa;
-    GH3*	NePi_EkOAMa_AT;
+    GH3*	 hEkOAMa;
+    GH3*	 hEkOAMa_AT;
 
-    GH1*	IM;
-    GH1*	MM;
+    GH1*	 hIM;
+    GH1*	 hMM;
 
-    TH2*    TimevsTSum;
-    TH2*    TimevsTSum_AT;
+    TH2*     hTimevsTSum;
+    TH2*     hTimevsTSum_AT;
 
-    Int_t APPT_ADC[16];
-    Int_t APPT_TDC[16];
+    Int_t    APPT_ADC[16];
+    Int_t    APPT_TDC[16];
 
     Double_t APPT_ADC_Ped[16];
     Double_t APPT_ADC_Gain[16];
@@ -57,20 +57,24 @@ private:
     Double_t APPT_ESumS;
     Double_t APPT_TSum;
 
-    TH1D*   hAPPT_Ener[15];
-    TH1D*   hAPPT_Time[15];
-    TH2D*   hAPPT_EvsT[15];
+    TH1D*    hAPPT_Ener[15];
+    TH1D*    hAPPT_Time[15];
+    TH2D*    hAPPT_EvsT[15];
 
-    TH1D*   hAPPT_TSum;
-    TH1D*   hAPPT_ESumH;
-    TH2D*   hAPPT_EHvsT;
-    TH1D*   hAPPT_ESumS;
-    TH2D*   hAPPT_ESvsT;
+    TH1D*    hAPPT_TSum;
+    TH1D*    hAPPT_ESumH;
+    TH2D*    hAPPT_EHvsT;
+    TH1D*    hAPPT_ESumS;
+    TH2D*    hAPPT_ESvsT;
 
-    TH2D*   hAPPT_EHvsES;
-    TH2D*   hAPPT_EHvsES_NePi;
+    TH2D*    hAPPT_EHvsES;
+    TH2D*    hAPPT_EHvsES_NePi;
 
     Double_t OACut;
+
+    Int_t    verbosity;
+    Bool_t   excl_pi0;
+    Bool_t   excl_pro;
 
 protected:
     virtual Bool_t  Start();
@@ -82,6 +86,8 @@ public:
     PActive();
     virtual ~PActive();
     virtual Bool_t  Init();
+    Bool_t InitVerbosity();
+    Bool_t InitExclusivity();
     Bool_t InitOpeningAngle();
     Bool_t InitActiveChannel();
     Bool_t InitActiveScale();
