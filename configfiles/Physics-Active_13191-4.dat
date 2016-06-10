@@ -39,21 +39,28 @@ Display-Scalers: TaggerAccScal 2896 2927
 Opening-Angle-Cut: 10
 
 # Active channels
-Active-Channel:  0  666.4 0.00988 -20000 0.1
-Active-Channel:  1  598.4 0.00981 -20000 0.1
-Active-Channel:  2  595.0 0.00951 -20000 0.1
-Active-Channel:  3  562.6 0.01011 -20000 0.1
-Active-Channel:  4  601.0 0.00912 -20000 0.1
-Active-Channel:  5  533.0 0.01161 -20000 0.1
-Active-Channel:  6  613.4 0.01080 -20000 0.1
-Active-Channel:  7  589.2 0.01029 -20000 0.1
-Active-Channel:  8  594.0 0.01038 -20000 0.1
-Active-Channel:  9  556.6 0.01031 -20000 0.1
-Active-Channel: 10  548.8 0.01009 -20000 0.1
-Active-Channel: 11  573.6 0.01054 -20000 0.1
-Active-Channel: 12  558.0 0.01105 -20000 0.1
-Active-Channel: 13  585.2 0.01035 -20000 0.1
-Active-Channel: 14  570.8 0.01143 -20000 0.1
-Active-Channel: 15 1780.6 0.05780 -20000 0.1
+Active-Channel:  0  666.4 0.00988 -20000 0.1 1
+Active-Channel:  1  598.4 0.00981 -20000 0.1 1
+Active-Channel:  2  595.0 0.00951 -20000 0.1 1
+Active-Channel:  3  562.6 0.01011 -20000 0.1 1
+Active-Channel:  4  601.0 0.00912 -20000 0.1 1
+Active-Channel:  5  533.0 0.01161 -20000 0.1 1
+Active-Channel:  6  613.4 0.01080 -20000 0.1 1
+Active-Channel:  7  589.2 0.01029 -20000 0.1 1
+Active-Channel:  8  594.0 0.01038 -20000 0.1 1
+Active-Channel:  9  556.6 0.01031 -20000 0.1 1
+Active-Channel: 10  548.8 0.01009 -20000 0.1 1
+Active-Channel: 11  573.6 0.01054 -20000 0.1 1
+Active-Channel: 12  558.0 0.01105 -20000 0.1 1
+Active-Channel: 13  585.2 0.01035 -20000 0.1 1
+Active-Channel: 14  570.8 0.01143 -20000 0.1 0
+Active-Channel: 15 1780.6 0.05780 -20000 0.1 0
 
+# Scale for software Esum
 Active-Scale: 1.06
+
+# Print verbosity
+Verbosity: 0
+
+# Exclusive cut on pi0 and rootinos
+Exclusivity: 1 0

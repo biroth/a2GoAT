@@ -44,6 +44,7 @@ PActive::PActive()
         APPT_ADC_Gain[i] = 0.01;
         APPT_TDC_Off[i] = -20000;
         APPT_TDC_Gain[i] = 0.1;
+        APPT_Use[i] = false;
 
         if(i==15) continue;
 
@@ -142,8 +143,9 @@ void	PActive::ProcessEvent()
         hAPPT_EvsT[i]->Fill(APPT_Time[i],APPT_Ener[i]);
 
         // Also add this energy to the software ESum
-        if(i<14) APPT_ESumS += APPT_Ener[i];
+        if (APPT_Use[i]) APPT_ESumS += APPT_Ener[i];
     }
+
     // Calibrate the ADC and TDC signals for the analog sum signal
     APPT_ESumH = APPT_ADC_Gain[15]*(APPT_ADC[15]-APPT_ADC_Ped[15]);
     APPT_TSum = APPT_TDC_Gain[15]*(APPT_TDC[15]-APPT_TDC_Off[15]);
@@ -337,14 +339,16 @@ Bool_t 	PActive::InitActiveChannel()
     {
         Int_t sc1;
         Double_t sc2, sc3, sc4, sc5;
+        Int_t sc6;
         config = ReadConfig("Active-Channel", instance);
-        if(sscanf( config.c_str(), "%d%lf%lf%lf%lf\n", &sc1, &sc2, &sc3, &sc4, &sc5) == 5)
+        if(sscanf( config.c_str(), "%d%lf%lf%lf%lf\n", &sc1, &sc2, &sc3, &sc4, &sc5, &sc6) == 6)
         {
-            cout << "Setting active channel " << sc1 << ": ADC Ped = " << sc2 << ", ADC Gain = " << sc3 << ", TDC Off = " << sc4 << ", TDC Gain = " << sc5 << endl << endl;
+            cout << "Setting active channel " << sc1 << ": ADC Ped = " << sc2 << ", ADC Gain = " << sc3 << ", TDC Off = " << sc4 << ", TDC Gain = " << sc5 << ", Sum? " << sc6 << endl << endl;
             APPT_ADC_Ped[sc1] = sc2;
             APPT_ADC_Gain[sc1] = sc3;
             APPT_TDC_Off[sc1] = sc4;
             APPT_TDC_Gain[sc1] = sc5;
+            APPT_Use[sc1] = sc6;
         }
         else if(strcmp(config.c_str(), "nokey") != 0)
         {

@@ -48,6 +48,7 @@ private:
     Double_t APPT_ADC_Gain[16];
     Double_t APPT_TDC_Off[16];
     Double_t APPT_TDC_Gain[16];
+    Bool_t   APPT_Use[16];
 
     Double_t APPT_Scale;
 
