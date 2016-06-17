@@ -51,6 +51,9 @@ private:
     TH2*     hTimevsTSum;
     TH2*     hTimevsTSum_AT;
 
+    GH3*     hChThMa_Hel0;
+    GH3*     hChThMa_Hel1;
+
     Int_t    APPT_ADC[16];
     Int_t    APPT_TDC[16];
 

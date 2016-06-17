@@ -6,9 +6,9 @@
 #Decode-Doubles: 1
 
 # Set prompt and random windows (standard library and GH1 library)
-Set-Prompt-Cut: -12 8
-Add-Random-Cut: -480 -15
-Add-Random-Cut: 10 500
+Set-Prompt-Cut: 0 20
+Add-Random-Cut: -450 -10
+Add-Random-Cut: 30 600
 
 # Set target mass (for standard physics library)
 Target-Mass: 938.272
@@ -17,7 +17,7 @@ Target-Mass: 938.272
 #Tagger-Channel-Cut: 1 309
 
 # where are the tagger scalers?
-Tagger-Scalers: 268 619
+#Tagger-Scalers: 268 619
 
 # where are the live time scalers?
 # first is clock, second is inhibited, third (optional) is tagger inhib

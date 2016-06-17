@@ -39,6 +39,9 @@ PActive::PActive()
     hTimevsTSum = new TH2D("hTimevsTSum", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns);APPT Time (ns)", 1400, -700, 700, 200, -1000, 1000);
     hTimevsTSum_AT = new TH2D("hTimevsTSum_AT", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns);APPT Time (ns)", 1400, -700, 700, 200, -1000, 1000);
 
+    hChThMa_Hel0 = new GH3("hChThMa_Hel0", "Neutral Pion Missing Mass;Tagger Channel;#theta_{#pi^{0}} (deg);m_{miss} (MeV)", 352, 0, 352, 36, 0, 180, 80, 800, 1200);
+    hChThMa_Hel1 = new GH3("hChThMa_Hel1", "Neutral Pion Missing Mass;Tagger Channel;#theta_{#pi^{0}} (deg);m_{miss} (MeV)", 352, 0, 352, 36, 0, 180, 80, 800, 1200);
+
     OACut = 180;
 
     verbosity = 0;
@@ -137,6 +140,10 @@ Bool_t	PActive::Start()
 
 void	PActive::ProcessEvent()
 {
+    // Reject if event had an error, otherwise grab the helicity
+    if (!(IsMCFile()) && ((GetTrigger()->GetNErrors() > 0) || !(GetTrigger()->HasHelicity()))) return;
+    Bool_t hel = GetTrigger()->GetHelicity();
+
     // Initial things for just the active target signals
 
     APPT_ESumS = 0;
@@ -180,7 +187,8 @@ void	PActive::ProcessEvent()
 
     TLorentzVector beam, target, pi0, proton, missing;
 
-    Double_t beam_time, pi0_time, time, pi0_theta, proton_theta, missing_theta, opening;
+    Int_t beam_channel;
+    Double_t beam_time, beam_energy, pi0_time, time, pi0_theta, pi0_phi, proton_theta, missing_theta, opening;
     target = GetTarget();
 
     // If specified in config, do double decoding, and then determine number of tagged photons
@@ -196,26 +204,32 @@ void	PActive::ProcessEvent()
         // Single tagger channel hits
         if (i < nTagg)
         {
-            TaggerAllHits->Fill(GetTagger()->GetTaggedChannel(i));
-            if (RejectTagged(i)) continue;
-            TaggerSingles->Fill(GetTagger()->GetTaggedChannel(i));
-            TaggerDoubles->Fill(GetTagger()->GetTaggedChannel(i));
-
+            beam_channel = GetTagger()->GetTaggedChannel(i);
             beam_time = GetTagger()->GetTaggedTime(i);
-            beam = TLorentzVector(0., 0., GetTagger()->GetTaggedEnergy(i), GetTagger()->GetTaggedEnergy(i));
+            beam_energy = GetTagger()->GetTaggedEnergy(i);
 
-            if (verbosity>1) cout << endl << "Tagger Channel = " << GetTagger()->GetTaggedChannel(i) << "\tTagged Energy = " << GetTagger()->GetTaggedEnergy(i) << endl << endl;
+            TaggerAllHits->Fill(beam_channel);
+            if (RejectTagged(i)) continue;
+            TaggerSingles->Fill(beam_channel);
+            TaggerDoubles->Fill(beam_channel);
+
+            beam = TLorentzVector(0., 0., beam_energy, beam_energy);
+
+            if (verbosity>1) cout << endl << "Tagger Channel = " << beam_channel << "\tTagged Energy = " << beam_energy << endl << endl;
         }
         // Double tagger channel hits
         else
         {
+            beam_channel = GetTagger()->GetDoubleRandom(i-nTagg);
+            beam_time = GetTagger()->GetDoubleTime(i-nTagg);
+            beam_energy = GetTagger()->GetDoubleEnergy(i-nTagg);
+
             if (RejectDouble(i-nTagg)) continue;
             TaggerDoubles->Fill(GetTagger()->GetDoubleRandom(i-nTagg));
 
-            beam_time = GetTagger()->GetDoubleTime(i-nTagg);
-            beam = TLorentzVector(0., 0., GetTagger()->GetDoubleEnergy(i-nTagg), GetTagger()->GetDoubleEnergy(i-nTagg));
+            beam = TLorentzVector(0., 0., beam_energy, beam_energy);
 
-            if (verbosity>1) cout << endl << "Double Channel = " << GetTagger()->GetDoubleRandom(i-nTagg) << "\tTagged Energy = " << GetTagger()->GetDoubleEnergy(i-nTagg) << endl << endl;
+            if (verbosity>1) cout << endl << "Double Channel = " << beam_channel << "\tTagged Energy = " << beam_energy << endl << endl;
         }
 
         // Loop over all neutral pions
@@ -226,6 +240,7 @@ void	PActive::ProcessEvent()
             //pi0 = GetNeutralPions()->GetVector(j,134.98);
             pi0_time = GetNeutralPions()->GetTime(j);
             pi0_theta = GetNeutralPions()->GetTheta(j);
+            pi0_phi = GetNeutralPions()->GetPhi(j);
 
             time = beam_time - pi0_time;
             hTime->Fill(time);
@@ -243,6 +258,12 @@ void	PActive::ProcessEvent()
                 hTimevsTSum_AT->Fill(time,APPT_TSum);
                 hEkESMa->Fill(missing.E()-missing.M(),APPT_ESumS-0.5,missing.M(),time);
                 hTiESMa->Fill(time-APPT_TSum,APPT_ESumS-0.5,missing.M(),time);
+            }
+
+            if((TMath::Abs(pi0_phi)>=45) && (TMath::Abs(pi0_phi)<135))
+            {
+                if(hel) hChThMa_Hel1->Fill(beam_channel,pi0_theta,missing.M(),time);
+                else hChThMa_Hel0->Fill(beam_channel,pi0_theta,missing.M(),time);
             }
 
             // Additional cut to ensure that the missing particle is the proton
