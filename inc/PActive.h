@@ -18,8 +18,12 @@ private:
     TH1*	 TaggerAccScal;
     TH1*	 VupromAccScal;
 
+    GH1*	 hIM;
+    GH1*	 hMM;
+
     TH1*	 hTime;
     TH1*	 hTCut;
+    GH3*	 hEkThMa;
     GH3*	 hEkEHMa;
     GH3*	 hEkESMa;
     GH3*	 hTiEHMa;
@@ -27,16 +31,22 @@ private:
 
     TH1*	 hTime_OA;
     TH1*	 hTCut_OA;
+    GH3*	 hEkThMa_OA;
     GH3*	 hEkEHMa_OA;
     GH3*	 hEkESMa_OA;
     GH3*	 hTiEHMa_OA;
     GH3*	 hTiESMa_OA;
 
+    TH1*	 hTime_Ch;
+    TH1*	 hTCut_Ch;
+    GH3*	 hEkThMa_Ch;
+    GH3*	 hEkEHMa_Ch;
+    GH3*	 hEkESMa_Ch;
+    GH3*	 hTiEHMa_Ch;
+    GH3*	 hTiESMa_Ch;
+
     GH3*	 hEkOAMa;
     GH3*	 hEkOAMa_AT;
-
-    GH1*	 hIM;
-    GH1*	 hMM;
 
     TH2*     hTimevsTSum;
     TH2*     hTimevsTSum_AT;

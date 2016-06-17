@@ -6,8 +6,12 @@ PActive::PActive()
     TaggerSingles = new TH1D("TaggerSingles", "Tagger - Single Hits", 352, 0, 352);
     TaggerDoubles = new TH1D("TaggerDoubles", "Tagger - Double Hits", 352, 0, 352);
 
+    hIM = new GH1("hIM", "IM", 400, 0, 400);
+    hMM	= new GH1("hMM", "MM", 400, 800, 1200);
+
     hTime = new TH1D("hTime", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns)", 1400, -700, 700);
     hTCut = new TH1D("hTCut", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns)", 1400, -700, 700);
+    hEkThMa = new GH3("hEkThMa", "Neutral Pion Missing Mass;Ek_{miss} (MeV);#theta_{miss} (deg);m_{miss} (MeV)", 100, 0, 200, 36, 0, 180, 80, 800, 1200);
     hEkEHMa = new GH3("hEkEHMa", "Neutral Pion Missing Mass;Ek_{miss} (MeV);APPT ESum Hardware;m_{miss} (MeV)", 100, 0, 200, 25, 0, 25, 80, 800, 1200);
     hEkESMa = new GH3("hEkESMa", "Neutral Pion Missing Mass;Ek_{miss} (MeV);APPT ESum Software;m_{miss} (MeV)", 100, 0, 200, 25, 0, 25, 80, 800, 1200);
     hTiEHMa = new GH3("hTiEHMa", "Neutral Pion Missing Mass;t_{#gamma}-t_{#pi^{0}}-t_{AT} (ns);APPT ESum Hardware;m_{miss} (MeV)", 200, -1000, 1000, 25, 0, 25, 80, 800, 1200);
@@ -15,16 +19,22 @@ PActive::PActive()
 
     hTime_OA = new TH1D("hTime_OA", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns)", 1400, -700, 700);
     hTCut_OA = new TH1D("hTCut_OA", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns)", 1400, -700, 700);
+    hEkThMa_OA = new GH3("hEkThMa_OA", "Neutral Pion Missing Mass;Ek_{miss} (MeV);#theta_{miss} (deg);m_{miss} (MeV)", 100, 0, 200, 36, 0, 180, 80, 800, 1200);
     hEkEHMa_OA = new GH3("hEkEHMa_OA", "Neutral Pion Missing Mass;Ek_{miss} (MeV);APPT ESum Hardware;m_{miss} (MeV)", 100, 0, 200, 25, 0, 25, 80, 800, 1200);
     hEkESMa_OA = new GH3("hEkESMa_OA", "Neutral Pion Missing Mass;Ek_{miss} (MeV);APPT ESum Software;m_{miss} (MeV)", 100, 0, 200, 25, 0, 25, 80, 800, 1200);
     hTiEHMa_OA = new GH3("hTiEHMa_OA", "Neutral Pion Missing Mass;t_{#gamma}-t_{#pi^{0}}-t_{AT} (ns);APPT ESum Hardware;m_{miss} (MeV)", 200, -1000, 1000, 25, 0, 25, 80, 800, 1200);
     hTiESMa_OA = new GH3("hTiESMa_OA", "Neutral Pion Missing Mass;t_{#gamma}-t_{#pi^{0}}-t_{AT} (ns);APPT ESum Software;m_{miss} (MeV)", 200, -1000, 1000, 25, 0, 25, 80, 800, 1200);
 
+    hTime_Ch = new TH1D("hTime_Ch", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns)", 1400, -700, 700);
+    hTCut_Ch = new TH1D("hTCut_Ch", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns)", 1400, -700, 700);
+    hEkThMa_Ch = new GH3("hEkThMa_Ch", "Neutral Pion Missing Mass;Ek_{miss} (MeV);#theta_{miss} (deg);m_{miss} (MeV)", 100, 0, 200, 36, 0, 180, 80, 800, 1200);
+    hEkEHMa_Ch = new GH3("hEkEHMa_Ch", "Neutral Pion Missing Mass;Ek_{miss} (MeV);APPT ESum Hardware;m_{miss} (MeV)", 100, 0, 200, 25, 0, 25, 80, 800, 1200);
+    hEkESMa_Ch = new GH3("hEkESMa_Ch", "Neutral Pion Missing Mass;Ek_{miss} (MeV);APPT ESum Software;m_{miss} (MeV)", 100, 0, 200, 25, 0, 25, 80, 800, 1200);
+    hTiEHMa_Ch = new GH3("hTiEHMa_Ch", "Neutral Pion Missing Mass;t_{#gamma}-t_{#pi^{0}}-t_{AT} (ns);APPT ESum Hardware;m_{miss} (MeV)", 200, -1000, 1000, 25, 0, 25, 80, 800, 1200);
+    hTiESMa_Ch = new GH3("hTiESMa_Ch", "Neutral Pion Missing Mass;t_{#gamma}-t_{#pi^{0}}-t_{AT} (ns);APPT ESum Software;m_{miss} (MeV)", 200, -1000, 1000, 25, 0, 25, 80, 800, 1200);
+
     hEkOAMa = new GH3("hEkOAMa", "Neutral Pion Missing Mass;Ek_{miss} (MeV);Opening Angle (deg);m_{miss} (MeV)", 100, 0, 200, 36, 0, 180, 80, 800, 1200);
     hEkOAMa_AT = new GH3("hEkOAMa_AT", "Neutral Pion Missing Mass;Ek_{miss} (MeV);Opening Angle (deg);m_{miss} (MeV)", 100, 0, 200, 36, 0, 180, 80, 800, 1200);
-
-    hIM = new GH1("hIM", "IM", 400, 0, 400);
-    hMM	= new GH1("hMM", "MM", 400, 800, 1200);
 
     hTimevsTSum = new TH2D("hTimevsTSum", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns);APPT Time (ns)", 1400, -700, 700, 200, -1000, 1000);
     hTimevsTSum_AT = new TH2D("hTimevsTSum_AT", "Neutral Pion Time;t_{#gamma}-t_{#pi^{0}} (ns);APPT Time (ns)", 1400, -700, 700, 200, -1000, 1000);
@@ -225,6 +235,7 @@ void	PActive::ProcessEvent()
             // Determine missing kinematics, and fill related histograms
             missing = beam + target - pi0;
             missing_theta = missing.Theta()*TMath::RadToDeg();
+            hEkThMa->Fill(missing.E()-missing.M(),missing_theta,missing.M(),time);
             hEkEHMa->Fill(missing.E()-missing.M(),APPT_ESumH-0.5,missing.M(),time);
             hTiEHMa->Fill(time-APPT_TSum,APPT_ESumH-0.5,missing.M(),time);
             if(APPT_ESumS>0)
@@ -235,7 +246,7 @@ void	PActive::ProcessEvent()
             }
 
             // Additional cut to ensure that the missing particle is the proton
-            if ((TMath::Abs(missing.M()-938.27) > 50) || (missing_theta < 25) || (missing.E()-missing.M() < 60)) continue;
+            //if ((TMath::Abs(missing.M()-938.27) > 50) || (missing_theta < 25) || (missing.E()-missing.M() < 60)) continue;
 
             // Loop over all rootinos
             for (Int_t k = 0; k < GetRootinos()->GetNParticles(); k++)
@@ -253,12 +264,30 @@ void	PActive::ProcessEvent()
                 {
                     hTime_OA->Fill(time);
                     if((GHistBGSub::IsPrompt(time)) || (GHistBGSub::IsRandom(time))) hTCut_OA->Fill(time);
+
+                    hEkThMa_OA->Fill(missing.E()-missing.M(),missing_theta,missing.M(),time);
                     hEkEHMa_OA->Fill(missing.E()-missing.M(),APPT_ESumH-0.5,missing.M(),time);
                     hTiEHMa_OA->Fill(time-APPT_TSum,APPT_ESumH-0.5,missing.M(),time);
                     if(APPT_ESumS>0)
                     {
                         hEkESMa_OA->Fill(missing.E()-missing.M(),APPT_ESumS-0.5,missing.M(),time);
                         hTiESMa_OA->Fill(time-APPT_TSum,APPT_ESumS-0.5,missing.M(),time);
+                    }
+
+                    // Check if rootino was tagged as charged
+                    if (GetRootinos()->IsCharged(k))
+                    {
+                        hTime_Ch->Fill(time);
+                        if((GHistBGSub::IsPrompt(time)) || (GHistBGSub::IsRandom(time))) hTCut_Ch->Fill(time);
+
+                        hEkThMa_Ch->Fill(missing.E()-missing.M(),missing_theta,missing.M(),time);
+                        hEkEHMa_Ch->Fill(missing.E()-missing.M(),APPT_ESumH-0.5,missing.M(),time);
+                        hTiEHMa_Ch->Fill(time-APPT_TSum,APPT_ESumH-0.5,missing.M(),time);
+                        if(APPT_ESumS>0)
+                        {
+                            hEkESMa_Ch->Fill(missing.E()-missing.M(),APPT_ESumS-0.5,missing.M(),time);
+                            hTiESMa_Ch->Fill(time-APPT_TSum,APPT_ESumS-0.5,missing.M(),time);
+                        }
                     }
                 }
             }
@@ -341,7 +370,7 @@ Bool_t 	PActive::InitActiveChannel()
         Double_t sc2, sc3, sc4, sc5;
         Int_t sc6;
         config = ReadConfig("Active-Channel", instance);
-        if(sscanf( config.c_str(), "%d%lf%lf%lf%lf\n", &sc1, &sc2, &sc3, &sc4, &sc5, &sc6) == 6)
+        if(sscanf( config.c_str(), "%d%lf%lf%lf%lf%d\n", &sc1, &sc2, &sc3, &sc4, &sc5, &sc6) == 6)
         {
             cout << "Setting active channel " << sc1 << ": ADC Ped = " << sc2 << ", ADC Gain = " << sc3 << ", TDC Off = " << sc4 << ", TDC Gain = " << sc5 << ", Sum? " << sc6 << endl << endl;
             APPT_ADC_Ped[sc1] = sc2;

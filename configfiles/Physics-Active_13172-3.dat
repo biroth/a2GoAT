@@ -1,5 +1,5 @@
 #=======================================================================
-# Config file for a Sigma2z Analysis of GoAT-Trees
+# Config File for an Active Target Analysis of GoAT-Trees
 #=======================================================================
 
 # Decode double hits in tagger?
