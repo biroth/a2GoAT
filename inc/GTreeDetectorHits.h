@@ -29,6 +29,13 @@ private:
     Int_t		VetoHits[438];
     Double_t    VetoEnergy[438];
     Double_t    VetoTime[438];
+    Int_t		nActiveHits;
+    Int_t		activeHits[10];
+    Double_t    activeEnergy[10];
+    Double_t    activeTime[10];
+    Double_t    activePosX[10];
+    Double_t    activePosY[10];
+    Double_t    activePosZ[10];
 
 protected:
     virtual void    SetBranchAdresses();
@@ -38,7 +45,7 @@ public:
     GTreeDetectorHits(GTreeManager *Manager);
     virtual ~GTreeDetectorHits();
 
-    virtual void            Clear()                         {nNaIHits=0; nPIDHits=0; nMWPCHits=0; nBaF2Hits=0; nVetoHits=0;}
+    virtual void            Clear()                         {nNaIHits=0; nPIDHits=0; nMWPCHits=0; nBaF2Hits=0; nVetoHits=0; nActiveHits=0;}
 
             Int_t		GetNNaIHits()              	const	{return nNaIHits;}
     const	Int_t*		GetNaIHits()           		const	{return NaIHits;}
@@ -79,6 +86,14 @@ public:
             Double_t	GetVetoEnergy(const Int_t index)	const	{return VetoEnergy[index];}
     const	Double_t*	GetVetoTime()           		const	{return VetoTime;}
             Double_t	GetVetoTime(const Int_t index)	const	{return VetoTime[index];}
+
+            Int_t		GetNActiveHits()                 const	{return nActiveHits;}
+    const	Int_t*		GetActiveHits()                  const	{return activeHits;}
+            Int_t		GetActiveHits(const Int_t index) const	{return activeHits[index];}
+    const	Double_t*	GetActiveEnergy()                const	{return activeEnergy;}
+            Double_t	GetActiveEnergy(const Int_t index)  const   {return activeEnergy[index];}
+    const	Double_t*	GetActiveTime()           		 const	{return activeTime;}
+            Double_t	GetActiveTime(const Int_t index) const	{return activeTime[index];}
 
     virtual void    SetNewBranchAddress(const char* bname, void *var);
 };

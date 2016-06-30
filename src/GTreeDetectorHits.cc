@@ -8,7 +8,8 @@ GTreeDetectorHits::GTreeDetectorHits(GTreeManager *Manager)    :
     nPIDHits(0),
     nMWPCHits(0),
     nBaF2Hits(0),
-    nVetoHits(0)
+    nVetoHits(0),
+    nActiveHits(0)
 {
 }
 
@@ -38,6 +39,13 @@ void    GTreeDetectorHits::SetBranchAdresses()
     if(inputTree->GetBranch("VetoHits")) inputTree->SetBranchAddress("VetoHits", VetoHits);
     if(inputTree->GetBranch("VetoEnergy")) inputTree->SetBranchAddress("VetoEnergy", VetoEnergy);
     if(inputTree->GetBranch("VetoTime")) inputTree->SetBranchAddress("VetoTime", VetoTime);
+    if(inputTree->GetBranch("nActiveHits")) inputTree->SetBranchAddress("nActiveHits", &nActiveHits);
+    if(inputTree->GetBranch("activeHits")) inputTree->SetBranchAddress("activeHits", activeHits);
+    if(inputTree->GetBranch("activeEnergy")) inputTree->SetBranchAddress("activeEnergy", activeEnergy);
+    if(inputTree->GetBranch("activeTime")) inputTree->SetBranchAddress("activeTime", activeTime);
+    if(inputTree->GetBranch("activePosX")) inputTree->SetBranchAddress("activePosX", activePosX);
+    if(inputTree->GetBranch("activePosY")) inputTree->SetBranchAddress("activePosY", activePosY);
+    if(inputTree->GetBranch("activePosZ")) inputTree->SetBranchAddress("activePosZ", activePosZ);
 }
 
 void    GTreeDetectorHits::SetBranches()
