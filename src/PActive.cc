@@ -41,6 +41,7 @@ PActive::PActive()
 
     hChThMa_Hel0 = new GH3("hChThMa_Hel0", "Neutral Pion Missing Mass;Tagger Channel;#theta_{#pi^{0}} (deg);m_{miss} (MeV)", 352, 0, 352, 36, 0, 180, 80, 800, 1200);
     hChThMa_Hel1 = new GH3("hChThMa_Hel1", "Neutral Pion Missing Mass;Tagger Channel;#theta_{#pi^{0}} (deg);m_{miss} (MeV)", 352, 0, 352, 36, 0, 180, 80, 800, 1200);
+    hChThMa_HelS = new GH3("hChThMa_HelS", "Neutral Pion Missing Mass;Tagger Channel;#theta_{#pi^{0}} (deg);m_{miss} (MeV)", 352, 0, 352, 36, 0, 180, 80, 800, 1200);
 
     OACut = 180;
 
@@ -102,6 +103,8 @@ Bool_t	PActive::Init()
     if(!InitActiveScale()) return kFALSE;
 
     if(!PPhysics::Init()) return kFALSE;
+
+    gTheory = new TGraph2D("Pi0P_SN11_F.txt");
 
     TaggerAccScal = GetScalerHist("TaggerAccScal");
     if(!TaggerAccScal)
@@ -188,7 +191,7 @@ void	PActive::ProcessEvent()
     TLorentzVector beam, target, pi0, proton, missing;
 
     Int_t beam_channel;
-    Double_t beam_time, beam_energy, pi0_time, time, pi0_theta, pi0_phi, proton_theta, missing_theta, opening;
+    Double_t beam_time, beam_energy, beam_energy_cm, beam_pol, pi0_time, time, pi0_theta, pi0_theta_cm, pi0_phi, proton_theta, missing_theta, opening;
     target = GetTarget();
 
     // If specified in config, do double decoding, and then determine number of tagged photons
@@ -213,8 +216,6 @@ void	PActive::ProcessEvent()
             TaggerSingles->Fill(beam_channel);
             TaggerDoubles->Fill(beam_channel);
 
-            beam = TLorentzVector(0., 0., beam_energy, beam_energy);
-
             if (verbosity>1) cout << endl << "Tagger Channel = " << beam_channel << "\tTagged Energy = " << beam_energy << endl << endl;
         }
         // Double tagger channel hits
@@ -227,10 +228,11 @@ void	PActive::ProcessEvent()
             if (RejectDouble(i-nTagg)) continue;
             TaggerDoubles->Fill(GetTagger()->GetDoubleRandom(i-nTagg));
 
-            beam = TLorentzVector(0., 0., beam_energy, beam_energy);
-
             if (verbosity>1) cout << endl << "Double Channel = " << beam_channel << "\tTagged Energy = " << beam_energy << endl << endl;
         }
+
+        beam = TLorentzVector(0., 0., beam_energy, beam_energy);
+        beam_pol = CalcCircBeamPol(450.0, 0.8, beam_energy);
 
         // Loop over all neutral pions
         for (Int_t j = 0; j < GetNeutralPions()->GetNParticles(); j++)
@@ -241,6 +243,14 @@ void	PActive::ProcessEvent()
             pi0_time = GetNeutralPions()->GetTime(j);
             pi0_theta = GetNeutralPions()->GetTheta(j);
             pi0_phi = GetNeutralPions()->GetPhi(j);
+
+            // CM conversion for theory calculation
+            Double_t eout = 0, s = 0, t = 0, mp = 938.27;
+            s = (TMath::Power(mp, 2)+(2*mp*beam_energy));
+            beam_energy_cm = ((s-TMath::Power(mp, 2))/(2*TMath::Sqrt(s)));
+            eout = (1/((1/ beam_energy)+(1-TMath::Cos(pi0_theta*TMath::DegToRad()))/mp));
+            t = (-2*beam_energy*eout*(1-TMath::Cos(pi0_theta*TMath::DegToRad())));
+            pi0_theta_cm = (TMath::ACos(1+t/(2*TMath::Power(beam_energy_cm, 2)))*TMath::RadToDeg());
 
             time = beam_time - pi0_time;
             hTime->Fill(time);
@@ -260,10 +270,21 @@ void	PActive::ProcessEvent()
                 hTiESMa->Fill(time-APPT_TSum,APPT_ESumS-0.5,missing.M(),time);
             }
 
-            if((TMath::Abs(pi0_phi)>=45) && (TMath::Abs(pi0_phi)<135))
+            if (verbosity>1) printf("%.2f\t\t%.2f\t%.2f\t\t%.2f\t%.2f\n",pi0_time,pi0.M(),pi0_theta,pi0_theta_cm,pi0_phi);
+
+            if((TMath::Abs(pi0_phi)>=45) && (TMath::Abs(pi0_phi)<135) && pi0_theta>15 && pi0_theta<=165)
             {
-                if(hel) hChThMa_Hel1->Fill(beam_channel,pi0_theta,missing.M(),time);
-                else hChThMa_Hel0->Fill(beam_channel,pi0_theta,missing.M(),time);
+                if(pi0_phi>0)
+                {
+                    if(hel) hChThMa_Hel1->Fill(beam_channel,pi0_theta,missing.M(),time);
+                    else hChThMa_Hel0->Fill(beam_channel,pi0_theta,missing.M(),time);
+                }
+                else
+                {
+                    if(hel) hChThMa_Hel0->Fill(beam_channel,pi0_theta,missing.M(),time);
+                    else hChThMa_Hel1->Fill(beam_channel,pi0_theta,missing.M(),time);
+                }
+                hChThMa_HelS->FillWeighted(beam_channel,pi0_theta,missing.M(),(beam_pol*(gTheory->Interpolate(beam_energy,pi0_theta_cm))),time);
             }
 
             // Additional cut to ensure that the missing particle is the proton
@@ -429,6 +450,13 @@ Bool_t 	PActive::InitActiveScale()
 
     return kTRUE;
 
+}
+
+Double_t PActive::CalcCircBeamPol(Double_t E_e, Double_t P_e, Double_t E_g)
+{
+    Double_t P_g = P_e*(((4*E_g*E_e)-(E_g*E_g))/((4*E_e*E_e)-(4*E_g*E_e)+(3*E_g*E_g)));
+
+    return P_g;
 }
 
 void	PActive::ProcessScalerRead()

@@ -3,7 +3,7 @@
 #=======================================================================
 
 # Decode double hits in tagger?
-#Decode-Doubles: 1
+Decode-Doubles: 1
 
 # Set prompt and random windows (standard library and GH1 library)
 Set-Prompt-Cut: 0 20
@@ -14,7 +14,7 @@ Add-Random-Cut: 30 600
 Target-Mass: 938.272
 
 # cut on the tagger channel (for standard physics library)
-#Tagger-Channel-Cut: 1 309
+Tagger-Channel-Cut: 128 255
 
 # where are the tagger scalers?
 #Tagger-Scalers: 268 619

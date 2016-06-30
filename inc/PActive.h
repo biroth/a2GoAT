@@ -8,6 +8,7 @@
 
 #include "GTreeManager.h"
 #include "PPhysics.h"
+#include "TGraph2D.h"
 
 class	PActive  : public PPhysics
 {
@@ -53,6 +54,7 @@ private:
 
     GH3*     hChThMa_Hel0;
     GH3*     hChThMa_Hel1;
+    GH3*     hChThMa_HelS;
 
     Int_t    APPT_ADC[16];
     Int_t    APPT_TDC[16];
@@ -90,6 +92,8 @@ private:
     Bool_t   excl_pi0;
     Bool_t   excl_pro;
 
+    TGraph2D* gTheory;
+
 protected:
     virtual Bool_t  Start();
     virtual void    ProcessEvent();
@@ -105,6 +109,7 @@ public:
     Bool_t InitOpeningAngle();
     Bool_t InitActiveChannel();
     Bool_t InitActiveScale();
+    Double_t CalcCircBeamPol(Double_t E_e, Double_t P_e, Double_t E_g);
 
 };
 #endif
