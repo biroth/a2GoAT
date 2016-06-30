@@ -299,7 +299,7 @@ void	PActive::ProcessEvent()
                 hEkOAMa->Fill(missing.E()-missing.M(),opening,missing.M(),time);
                 if(APPT_ESumS>0) hEkOAMa_AT->Fill(missing.E()-missing.M(),opening,missing.M(),time);
 
-                if (verbosity>1) printf("%.2f\t\t%.2f\t%.2f\t\t%.2f\t%.2f\t\t%.2f\n",missing.E()-missing.M(),missing.Theta()*TMath::RadToDeg(),GetRootinos()->GetUnitVector(k).Theta()*TMath::RadToDeg(),missing.Phi()*TMath::RadToDeg(),GetRootinos()->GetUnitVector(k).Phi()*TMath::RadToDeg(),(TMath::RadToDeg()*missing.Angle(GetRootinos()->GetUnitVector(k))));
+                if (verbosity>1) printf("%.2f\t\t%.2f\t%.2f\t%.2f\t\t%.2f\t%.2f\t\t%.2f\n",missing.E()-missing.M(),missing.Theta()*TMath::RadToDeg(),proton_theta,GetRootinos()->GetUnitVector(k).Theta()*TMath::RadToDeg(),missing.Phi()*TMath::RadToDeg(),GetRootinos()->GetUnitVector(k).Phi()*TMath::RadToDeg(),(TMath::RadToDeg()*missing.Angle(GetRootinos()->GetUnitVector(k))));
 
                 // Check if event satisifes an opening angle cut between the expected and detected proton
                 if (opening < OACut)
